@@ -1,0 +1,10 @@
+version: '0.1'
+services:
+  rand_catseffect:
+    restart: always
+    image: cats-effect-r-and-d:latest
+    network_mode: host
+    ports:
+      - "8080:8080"
+    environment:
+      - DEBUG=false
