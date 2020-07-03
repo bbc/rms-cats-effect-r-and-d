@@ -9,24 +9,24 @@ scalacOptions += "-Ymacro-annotations"
 scalafmtOnCompile := true
 
 val versions = new {
-  val cats          = "2.1.1"
-  val catsEffect    = "2.1.3"
-  val shapeless     = "2.3.3"
-  val catsMeowMtl   = "0.4.0"
-  val circe         = "0.13.0"
-  val fs2           = "2.4.2"
-  val http4s        = "0.21.3"
-  val log4cats      = "1.1.1"
-  val refined       = "0.9.14"
-  val redis4cats    = "0.10.0"
-  val skunk         = "0.0.11"
-  val monocle       = "2.0.5"
-  val betterMonadicFor = "0.3.1"
-  val logback          = "1.2.3"
-
-  val scalaCheck    = "1.14.3"
-  val scalaTest     = "3.2.0"
-  val scalaTestPlus = "3.2.0.0"
+  val cats                = "2.1.1"
+  val catsEffect          = "2.1.3"
+  val shapeless           = "2.3.3"
+  val catsMeowMtl         = "0.4.0"
+  val circe               = "0.13.0"
+  val fs2                 = "2.4.2"
+  val http4s              = "0.21.3"
+  val log4cats            = "1.1.1"
+  val refined             = "0.9.14"
+  val redis4cats          = "0.10.0"
+  val skunk               = "0.0.11"
+  val monocle             = "2.0.5"
+  val betterMonadicFor    = "0.3.1"
+  val logback             = "1.2.3"
+  val config              = "1.4.0"
+  val scalaCheck          = "1.14.3"
+  val scalaTest           = "3.2.0"
+  val scalaTestPlus       = "3.2.0.0"
 }
 
 libraryDependencies ++= Seq(
@@ -54,6 +54,7 @@ libraryDependencies ++= Seq(
   "io.circe"                          %% "circe-generic"                  % versions.circe,
   "io.circe"                          %% "circe-parser"                   % versions.circe,
   "io.circe"                          %% "circe-refined"                  % versions.circe,
+  "com.typesafe"                      %  "config"                         % versions.config,
   "eu.timepit"                        %% "refined"                        % versions.refined,
   "eu.timepit"                        %% "refined-cats"                   % versions.refined,
   "org.scalatestplus"                 %% "scalacheck-1-14"                % versions.scalaTestPlus,
@@ -83,7 +84,9 @@ lazy val core = (project in file("modules/core"))
     scalacOptions += "-Ymacro-annotations",
     scalafmtOnCompile := true,
     resolvers += Resolver.sonatypeRepo("snapshots"),
-    Defaults.itSettings,
+    javaOptions in run ++= Seq(
+      "-Dconfig.resource=application.dev.conf",
+      "-Dlogback.configurationFile=logback.dev.xml"),
     dockerBaseImage := "openjdk:8u201-jre-alpine3.9",
     dockerExposedPorts ++= Seq(8080),
     makeBatScripts := Seq(),

@@ -1,0 +1,11 @@
+<configuration>
+
+    <appender name="ASYNC_APPLICATION_LOG" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="APPLICATION_LOG" />
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="ASYNC_APPLICATION_LOG" />
+    </root>
+
+</configuration>
