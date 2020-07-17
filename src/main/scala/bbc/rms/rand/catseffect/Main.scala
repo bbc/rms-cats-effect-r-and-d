@@ -1,19 +1,27 @@
 package bbc.rms.rand.catseffect
 
-import cats.effect._
+import cats.effect.{ExitCode, IO, IOApp, _}
 import cats.implicits._
 import io.chrisdavenport.log4cats.Logger
 import io.chrisdavenport.log4cats.slf4j.Slf4jLogger
 import org.http4s.server.blaze.BlazeServerBuilder
-import cats.effect.{ ExitCode, IO, IOApp }
 
 class Main extends IOApp {
 
   implicit val logger = Slf4jLogger.getLogger[IO]
 
-  override def run(args: List[String]): IO[ExitCode] = ???
-    val config = RandDConfig()
+  override def run(args: List[String]): IO[ExitCode] =
+    RandDConfig[IO]().flatMap { cfg =>
+      Logger[IO].info(s"Loaded config $cfg") >>
+        AppResources.make[IO](cfg).use { res =>
 
+          //datasource1
+          //datasource2
+          //datasource3
+          //httpclient
+          //server
+
+    }
 //    config.load[IO].flatMap { cfg =>
 //      Logger[IO].info(s"Loaded config $cfg") >>
 //        AppResources.make[IO](cfg).use { res =>
