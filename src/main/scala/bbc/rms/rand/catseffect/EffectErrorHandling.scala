@@ -4,16 +4,20 @@ import cats.{Monad, MonadError}
 import cats.effect._
 import cats.implicits._
 
-object Guarantee extends IOApp {
+object EffectErrorHandling extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] = {
 //    val a = new Experiment[IO]().createEffect
     val effect = IO.delay(throw new IllegalArgumentException("returning error")).attempt
-    effect.map(println).as(ExitCode.Success)
+
+    val result = for {
+      _ <- effect.map(println)
+      _ <- effect *> IO(println("*> executed"))
+      _ <- effect >> IO(println(">> executed"))
+    } yield ()
+
+    result.as(ExitCode.Success)
   }
-
-
-
 
 }
 
