@@ -2,14 +2,12 @@ package bbc.rms.rand.catseffect
 
 import cats.{Monad, MonadError}
 import cats.effect._
+import cats.implicits._
 
 object Guarantee extends IOApp {
 
   override def run(args: List[String]): IO[ExitCode] = {
-
-    val a = new Experiment[IO]().createEffect
-
-
+//    val a = new Experiment[IO]().createEffect
     val effect = IO.delay(throw new IllegalArgumentException("returning error")).attempt
     effect.map(println).as(ExitCode.Success)
   }
@@ -19,10 +17,6 @@ object Guarantee extends IOApp {
 
 }
 
-class Experiment[F[_] : Sync : Monad]() {
-  def createEffect: F[String] = {
-    val a = Sync[F].delay("3")
-    //a.map
-    a
-  }
+class Experiment[F[_]: Sync]() {
+  def createEffect: F[String] = Sync[F].delay("3")
 }
