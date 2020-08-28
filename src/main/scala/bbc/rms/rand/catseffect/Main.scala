@@ -1,5 +1,6 @@
 package bbc.rms.rand.catseffect
 
+import bbc.rms.rand.catseffect.RandDConfig.RandDConfig
 import cats.effect.{ExitCode, IO, IOApp, _}
 import cats.implicits._
 import io.chrisdavenport.log4cats.Logger
@@ -11,10 +12,12 @@ class Main extends IOApp {
   implicit val logger = Slf4jLogger.getLogger[IO]
 
   override def run(args: List[String]): IO[ExitCode] =
-    RandDConfig[IO]().flatMap { cfg =>
+    RandDConfig[IO]().flatMap { cfg: RandDConfig =>
       Logger[IO].info(s"Loaded config $cfg") >>
         AppResources.make[IO](cfg).use { res =>
-
+          for {
+            clients <- HttpClients.make[IO](cfg.httpClientA, cfg.httpClientB, res.client)
+          } yield ()
           //datasource1
           //datasource2
           //datasource3

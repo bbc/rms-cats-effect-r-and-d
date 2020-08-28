@@ -44,12 +44,20 @@ class RandDConfig() {
 
   val serviceName: String = config.getString("service.name")
 
-  val httpClient = HttpClientConfig(
+  val httpClientA = HttpClientConfig(
     config.getString("client.a-client.protocol"),
     config.getString("client.a-client.host"),
     config.getInt("client.a-client.port"),
     config.getLong("client.a-client.request-timeout-millis").milliseconds,
     Try(config.getLong("client.a-client.connect-timeout-millis").millisecond).toOption
+  )
+
+  val httpClientB = HttpClientConfig(
+    config.getString("client.b-client.protocol"),
+    config.getString("client.b-client.host"),
+    config.getInt("client.b-client.port"),
+    config.getLong("client.b-client.request-timeout-millis").milliseconds,
+    Try(config.getLong("client.b-client.connect-timeout-millis").millisecond).toOption
   )
 
   val postgreSQLConfig = PostgreSQLConfig(
