@@ -1,7 +1,7 @@
 package bbc.rms.rand.catseffect
 
 import bbc.rms.rand.catseffect.RandDConfig.RandDConfig
-import cats.effect.{ExitCode, IO, IOApp, _}
+import cats.effect.{ ExitCode, IO, IOApp, _ }
 import cats.implicits._
 import io.chrisdavenport.log4cats.Logger
 import io.chrisdavenport.log4cats.slf4j.Slf4jLogger
@@ -17,14 +17,16 @@ class Main extends IOApp {
         AppResources.make[IO](cfg).use { res =>
           for {
             clients <- HttpClients.make[IO](cfg.catFactHttpConfig, cfg.btcInfoHttpConfig, res.client)
-          } yield ()
-          //datasource1
-          //datasource2
-          //datasource3
-          //httpclient
-          //server
+          } yield ExitCode.Success
+        //datasource1
+        //datasource2
+        //datasource3
+        //httpclient
+        //server
 
+        }
     }
+}
 //    config.load[IO].flatMap { cfg =>
 //      Logger[IO].info(s"Loaded config $cfg") >>
 //        AppResources.make[IO](cfg).use { res =>
@@ -46,5 +48,3 @@ class Main extends IOApp {
 //          } yield ExitCode.Success
 //        }
 //    }
-
-}

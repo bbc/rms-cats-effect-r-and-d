@@ -27,6 +27,8 @@ val versions = new {
   val scalaCheck          = "1.14.3"
   val scalaTest           = "3.2.0"
   val scalaTestPlus       = "3.2.0.0"
+  val newtype             = "0.4.3"
+
 }
 
 libraryDependencies ++= Seq(
@@ -60,6 +62,7 @@ libraryDependencies ++= Seq(
   "org.scalatestplus"                 %% "scalacheck-1-14"                % versions.scalaTestPlus,
   "com.github.julien-truffaut"        %% "monocle-core"                   % versions.monocle,
   "com.github.julien-truffaut"        %% "monocle-macro"                  % versions.monocle,
+  "io.estatico"                       %% "newtype"                        % versions.newtype,
   "com.github.julien-truffaut"        %% "monocle-law"                    % versions.monocle % "test",
   "org.scalatest"                     %% "scalatest"                      % versions.scalaTest % "test"
 )

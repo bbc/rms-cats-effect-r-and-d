@@ -6,14 +6,14 @@ import org.http4s.client.Client
 
 object HttpClients {
   def make[F[_]: Sync](
-                        clientAConfig: HttpClientConfig,
-                        clientBConfig: HttpClientConfig,
-                        client: Client[F]
-                      ): F[HttpClients[F]] =
+      clientAConfig: HttpClientConfig,
+      clientBConfig: HttpClientConfig,
+      client: Client[F]
+  ): F[HttpClients[F]] =
     Sync[F].delay(
       new HttpClients[F] {
         def catFacts: InfoClient[F, CatFact] = new CatInfoClient[F](clientAConfig, client)
-        def btcInfo: InfoClient[F, Coin] = new BtcInfoClient[F](clientBConfig, client)
+        def btcInfo: InfoClient[F, Coin]     = new BtcInfoClient[F](clientBConfig, client)
       }
     )
 }
