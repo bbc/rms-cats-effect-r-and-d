@@ -16,7 +16,7 @@ class Main extends IOApp {
       Logger[IO].info(s"Loaded config $cfg") >>
         AppResources.make[IO](cfg).use { res =>
           for {
-            clients <- HttpClients.make[IO](cfg.httpClientA, cfg.httpClientB, res.client)
+            clients <- HttpClients.make[IO](cfg.catFactHttpConfig, cfg.btcInfoHttpConfig, res.client)
           } yield ()
           //datasource1
           //datasource2

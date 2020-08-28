@@ -12,11 +12,13 @@ object HttpClients {
                       ): F[HttpClients[F]] =
     Sync[F].delay(
       new HttpClients[F] {
-        def payment: PaymentClient[F] = new LivePaymentClient[F](cfg, client)
+        def catFacts: InfoClient[F, CatFact] = new CatInfoClient[F](clientAConfig, client)
+        def btcInfo: InfoClient[F, Coin] = new BtcInfoClient[F](clientBConfig, client)
       }
     )
 }
 
 trait HttpClients[F[_]] {
-  def payment: PaymentClient[F]
+  def catFacts: InfoClient[F, CatFact]
+  def btcInfo: InfoClient[F, Coin]
 }

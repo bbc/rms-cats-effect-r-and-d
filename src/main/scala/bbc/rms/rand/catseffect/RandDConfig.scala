@@ -20,7 +20,7 @@ object RandDConfig {
 
   case class HttpClientConfig( protocol: NonEmptyString,
                                host: NonEmptyString,
-                               port: UserPortNumber,
+                               port: Option[UserPortNumber],
                                requestTimeout: FiniteDuration,
                                connectTimeout: Option[FiniteDuration]) {
     /**
@@ -44,18 +44,18 @@ class RandDConfig() {
 
   val serviceName: String = config.getString("service.name")
 
-  val httpClientA = HttpClientConfig(
+  val catFactHttpConfig = HttpClientConfig(
     config.getString("client.a-client.protocol"),
     config.getString("client.a-client.host"),
-    config.getInt("client.a-client.port"),
+    Try(config.getInt("client.a-client.port")).toOption,
     config.getLong("client.a-client.request-timeout-millis").milliseconds,
     Try(config.getLong("client.a-client.connect-timeout-millis").millisecond).toOption
   )
 
-  val httpClientB = HttpClientConfig(
+  val btcInfoHttpConfig = HttpClientConfig(
     config.getString("client.b-client.protocol"),
     config.getString("client.b-client.host"),
-    config.getInt("client.b-client.port"),
+    Try(config.getInt("client.b-client.port")).toOption,
     config.getLong("client.b-client.request-timeout-millis").milliseconds,
     Try(config.getLong("client.b-client.connect-timeout-millis").millisecond).toOption
   )
